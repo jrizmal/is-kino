@@ -10,6 +10,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using web.Data;
 using Microsoft.EntityFrameworkCore;
+using web.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace web
 {
@@ -29,6 +31,10 @@ namespace web
             services.AddDbContext<UniversityContext>(options => options.UseSqlServer(
                 Configuration.GetConnectionString("UniversityContext")
             ));
+            services.AddIdentity<AppUser, IdentityRole>(
+                options => options.Stores.MaxLengthForKeys = 128
+            ).AddEntityFrameworkStores<UniversityContext>().AddDefaultUI().AddDefaultTokenProviders();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -49,6 +55,7 @@ namespace web
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
@@ -56,7 +63,9 @@ namespace web
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapRazorPages();
             });
+
         }
     }
 }

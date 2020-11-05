@@ -7,16 +7,21 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using web.Data;
 using web.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 
 namespace web.Controllers
 {
+    [Authorize]
     public class CoursesController : Controller
     {
         private readonly UniversityContext _context;
+        private readonly UserManager<AppUser> _userManager;
 
-        public CoursesController(UniversityContext context)
+        public CoursesController(UniversityContext context, UserManager<AppUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: Courses
@@ -56,12 +61,17 @@ namespace web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("CourseID,Title,Credits")] Course course)
         {
+            var user = await _userManager.GetUserAsync(User);
             if (ModelState.IsValid)
             {
+                course.DateCreated=DateTime.Now;
+                course.DateEdited=DateTime.Now;
+                course.Owner=user;
                 _context.Add(course);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            
             return View(course);
         }
 

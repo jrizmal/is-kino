@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using System;
 
 namespace web.Models
 {
@@ -9,6 +10,11 @@ namespace web.Models
         public int CourseID { get; set; }
         public string Title { get; set; }
         public int Credits { get; set; }
+
+        public AppUser? Owner { get; set; }
+        public DateTime? DateCreated { get; set; }
+
+        public DateTime? DateEdited { get; set; }
 
         public ICollection<Enrollment> Enrollments { get; set; }
     }
