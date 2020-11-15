@@ -13,3 +13,5 @@ namespace web.Models
         public ICollection<Enrollment> Enrollments { get; set; }
     }
 }
+
+// Domen was here 
