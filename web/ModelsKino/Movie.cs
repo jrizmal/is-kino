@@ -13,5 +13,3 @@ namespace web.ModelsKino
         public DateTime EndDate { get; set; }
     }
 }
-
-// Domen was here 
