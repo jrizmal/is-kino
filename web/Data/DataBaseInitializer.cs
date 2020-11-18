@@ -2,16 +2,27 @@ using web.Models;
 using System;
 using System.Linq;
 
-namespace web.Data{
-    public static class DbInitializer{
-        public static void Initialize(KinoContext ctx){
-            
-            
+namespace web.Data
+{
+    public static class DbInitializer
+    {
+        public static void Initialize(KinoContext ctx)
+        {
+
+
             ctx.Database.EnsureCreated();
 
-            if(ctx.movies.Any()){
+            if (ctx.movies.Any())
+            {
                 return;
             }
+            var movies = new Movie[]{
+new Movie{Name="Hitri in drzni 3",Rating="8,3",Length="122",StartDate=new DateTime(2020,7,1),EndDate=new DateTime(2020,12,30)},
+new Movie{Name="Godzilla: King of the monsters",Rating="10",Length="134",StartDate=new DateTime(2020,3,1),EndDate=new DateTime(2020,7,30)},
+new Movie{Name="Anchorman 2",Rating="9,4",Length="97",StartDate=new DateTime(2020,8,1),EndDate=new DateTime(2020,12,30)},
+            };
+            ctx.movies.AddRange(movies);
+            ctx.SaveChanges();
             /* DB doesn't have any data */
             /* var students = new Student[]
             {

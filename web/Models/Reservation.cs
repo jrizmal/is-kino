@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace web.ModelsKino
+namespace web.Models
 {
     public class Reservation
     {

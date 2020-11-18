@@ -1,6 +1,5 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using web.ModelsKino;
 using web.Models;   // za AppUser
 
 namespace web.Data
