@@ -3,17 +3,15 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using web.Data;
 
 namespace web.Migrations
 {
-    [DbContext(typeof(UniversityContext))]
-    [Migration("20201115195445_Initial")]
-    partial class Initial
+    [DbContext(typeof(KinoContext))]
+    partial class KinoContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -230,77 +228,151 @@ namespace web.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("web.Models.Course", b =>
+            modelBuilder.Entity("web.ModelsKino.Movie", b =>
                 {
-                    b.Property<int>("CourseID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Credits")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("DateCreated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("DateEdited")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("OwnerId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Title")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("CourseID");
-
-                    b.HasIndex("OwnerId");
-
-                    b.ToTable("Course");
-                });
-
-            modelBuilder.Entity("web.Models.Enrollment", b =>
-                {
-                    b.Property<int>("EnrollmentID")
+                    b.Property<int>("MovieId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("CourseID")
-                        .HasColumnType("int");
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("datetime2");
 
-                    b.Property<int?>("Grade")
-                        .HasColumnType("int");
+                    b.Property<string>("Length")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("StudentID")
-                        .HasColumnType("int");
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("EnrollmentID");
+                    b.Property<string>("Rating")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.HasIndex("CourseID");
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
 
-                    b.HasIndex("StudentID");
+                    b.HasKey("MovieId");
 
-                    b.ToTable("Enrollment");
+                    b.ToTable("Movie");
                 });
 
-            modelBuilder.Entity("web.Models.Student", b =>
+            modelBuilder.Entity("web.ModelsKino.Reservation", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("ReservationId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("EnrollmentDate")
+                    b.Property<double>("Price")
+                        .HasColumnType("float");
+
+                    b.Property<int>("Seats")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ShowingId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ReservationId");
+
+                    b.HasIndex("ShowingId");
+
+                    b.ToTable("Reservation");
+                });
+
+            modelBuilder.Entity("web.ModelsKino.Room", b =>
+                {
+                    b.Property<int>("RoomId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("RoomId");
+
+                    b.ToTable("Room");
+                });
+
+            modelBuilder.Entity("web.ModelsKino.Seat", b =>
+                {
+                    b.Property<int>("SeatId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("Number")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("RoomId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Row")
+                        .HasColumnType("int");
+
+                    b.HasKey("SeatId");
+
+                    b.HasIndex("RoomId");
+
+                    b.ToTable("Seat");
+                });
+
+            modelBuilder.Entity("web.ModelsKino.SeatShowing", b =>
+                {
+                    b.Property<int>("SeatShowingId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("SeatId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ShowingId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("taken")
+                        .HasColumnType("bit");
+
+                    b.HasKey("SeatShowingId");
+
+                    b.HasIndex("SeatId");
+
+                    b.HasIndex("ShowingId");
+
+                    b.ToTable("SeatShowing");
+                });
+
+            modelBuilder.Entity("web.ModelsKino.Showing", b =>
+                {
+                    b.Property<int>("ShowingId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Length")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("MovieId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Rating")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("RoomId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("StartTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("FirstMidName")
-                        .HasColumnType("nvarchar(max)");
+                    b.HasKey("ShowingId");
 
-                    b.Property<string>("LastName")
-                        .HasColumnType("nvarchar(max)");
+                    b.HasIndex("MovieId");
 
-                    b.HasKey("ID");
+                    b.HasIndex("RoomId");
 
-                    b.ToTable("Student");
+                    b.ToTable("Showing");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -354,26 +426,40 @@ namespace web.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("web.Models.Course", b =>
+            modelBuilder.Entity("web.ModelsKino.Reservation", b =>
                 {
-                    b.HasOne("web.Models.AppUser", "Owner")
+                    b.HasOne("web.ModelsKino.Showing", "Showing")
                         .WithMany()
-                        .HasForeignKey("OwnerId");
+                        .HasForeignKey("ShowingId");
                 });
 
-            modelBuilder.Entity("web.Models.Enrollment", b =>
+            modelBuilder.Entity("web.ModelsKino.Seat", b =>
                 {
-                    b.HasOne("web.Models.Course", "Course")
-                        .WithMany("Enrollments")
-                        .HasForeignKey("CourseID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasOne("web.ModelsKino.Room", "Room")
+                        .WithMany()
+                        .HasForeignKey("RoomId");
+                });
 
-                    b.HasOne("web.Models.Student", "Student")
-                        .WithMany("Enrollments")
-                        .HasForeignKey("StudentID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+            modelBuilder.Entity("web.ModelsKino.SeatShowing", b =>
+                {
+                    b.HasOne("web.ModelsKino.Seat", "Seat")
+                        .WithMany()
+                        .HasForeignKey("SeatId");
+
+                    b.HasOne("web.ModelsKino.Showing", "Showing")
+                        .WithMany()
+                        .HasForeignKey("ShowingId");
+                });
+
+            modelBuilder.Entity("web.ModelsKino.Showing", b =>
+                {
+                    b.HasOne("web.ModelsKino.Movie", "Movie")
+                        .WithMany()
+                        .HasForeignKey("MovieId");
+
+                    b.HasOne("web.ModelsKino.Room", "Room")
+                        .WithMany()
+                        .HasForeignKey("RoomId");
                 });
 #pragma warning restore 612, 618
         }

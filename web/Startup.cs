@@ -28,18 +28,15 @@ namespace web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-            services.AddDbContext<UniversityContext>(options => options.UseSqlServer(
-                Configuration.GetConnectionString("UniversityContext")
-            ));
 
             // kino 
             services.AddDbContext<KinoContext>(options => options.UseSqlServer(
                 Configuration.GetConnectionString("KinoContext")
             ));
-            
+
             services.AddIdentity<AppUser, IdentityRole>(
                 options => options.Stores.MaxLengthForKeys = 128
-            ).AddEntityFrameworkStores<UniversityContext>().AddDefaultUI().AddDefaultTokenProviders();
+            ).AddEntityFrameworkStores<KinoContext>().AddDefaultUI().AddDefaultTokenProviders();
 
         }
 

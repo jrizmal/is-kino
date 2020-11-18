@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace web.Migrations
 {
-    public partial class Initial : Migration
+    public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -50,18 +50,33 @@ namespace web.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Student",
+                name: "Movie",
                 columns: table => new
                 {
-                    ID = table.Column<int>(nullable: false)
+                    MovieId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    LastName = table.Column<string>(nullable: true),
-                    FirstMidName = table.Column<string>(nullable: true),
-                    EnrollmentDate = table.Column<DateTime>(nullable: false)
+                    Name = table.Column<string>(nullable: true),
+                    Rating = table.Column<string>(nullable: true),
+                    Length = table.Column<string>(nullable: true),
+                    StartDate = table.Column<DateTime>(nullable: false),
+                    EndDate = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Student", x => x.ID);
+                    table.PrimaryKey("PK_Movie", x => x.MovieId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Room",
+                columns: table => new
+                {
+                    RoomId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Room", x => x.RoomId);
                 });
 
             migrationBuilder.CreateTable(
@@ -171,52 +186,102 @@ namespace web.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Course",
+                name: "Seat",
                 columns: table => new
                 {
-                    CourseID = table.Column<int>(nullable: false),
-                    Title = table.Column<string>(nullable: true),
-                    Credits = table.Column<int>(nullable: false),
-                    OwnerId = table.Column<string>(nullable: true),
-                    DateCreated = table.Column<DateTime>(nullable: true),
-                    DateEdited = table.Column<DateTime>(nullable: true)
+                    SeatId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    RoomId = table.Column<int>(nullable: true),
+                    Row = table.Column<int>(nullable: false),
+                    Number = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Course", x => x.CourseID);
+                    table.PrimaryKey("PK_Seat", x => x.SeatId);
                     table.ForeignKey(
-                        name: "FK_Course_AspNetUsers_OwnerId",
-                        column: x => x.OwnerId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
+                        name: "FK_Seat_Room_RoomId",
+                        column: x => x.RoomId,
+                        principalTable: "Room",
+                        principalColumn: "RoomId",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Enrollment",
+                name: "Showing",
                 columns: table => new
                 {
-                    EnrollmentID = table.Column<int>(nullable: false)
+                    ShowingId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CourseID = table.Column<int>(nullable: false),
-                    StudentID = table.Column<int>(nullable: false),
-                    Grade = table.Column<int>(nullable: true)
+                    MovieId = table.Column<int>(nullable: true),
+                    RoomId = table.Column<int>(nullable: true),
+                    Name = table.Column<string>(nullable: true),
+                    Rating = table.Column<string>(nullable: true),
+                    Length = table.Column<string>(nullable: true),
+                    StartTime = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Enrollment", x => x.EnrollmentID);
+                    table.PrimaryKey("PK_Showing", x => x.ShowingId);
                     table.ForeignKey(
-                        name: "FK_Enrollment_Course_CourseID",
-                        column: x => x.CourseID,
-                        principalTable: "Course",
-                        principalColumn: "CourseID",
-                        onDelete: ReferentialAction.Cascade);
+                        name: "FK_Showing_Movie_MovieId",
+                        column: x => x.MovieId,
+                        principalTable: "Movie",
+                        principalColumn: "MovieId",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Enrollment_Student_StudentID",
-                        column: x => x.StudentID,
-                        principalTable: "Student",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
+                        name: "FK_Showing_Room_RoomId",
+                        column: x => x.RoomId,
+                        principalTable: "Room",
+                        principalColumn: "RoomId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Reservation",
+                columns: table => new
+                {
+                    ReservationId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ShowingId = table.Column<int>(nullable: true),
+                    Seats = table.Column<int>(nullable: false),
+                    Price = table.Column<double>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Reservation", x => x.ReservationId);
+                    table.ForeignKey(
+                        name: "FK_Reservation_Showing_ShowingId",
+                        column: x => x.ShowingId,
+                        principalTable: "Showing",
+                        principalColumn: "ShowingId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "SeatShowing",
+                columns: table => new
+                {
+                    SeatShowingId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    SeatId = table.Column<int>(nullable: true),
+                    ShowingId = table.Column<int>(nullable: true),
+                    taken = table.Column<bool>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SeatShowing", x => x.SeatShowingId);
+                    table.ForeignKey(
+                        name: "FK_SeatShowing_Seat_SeatId",
+                        column: x => x.SeatId,
+                        principalTable: "Seat",
+                        principalColumn: "SeatId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_SeatShowing_Showing_ShowingId",
+                        column: x => x.ShowingId,
+                        principalTable: "Showing",
+                        principalColumn: "ShowingId",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
@@ -259,19 +324,34 @@ namespace web.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Course_OwnerId",
-                table: "Course",
-                column: "OwnerId");
+                name: "IX_Reservation_ShowingId",
+                table: "Reservation",
+                column: "ShowingId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Enrollment_CourseID",
-                table: "Enrollment",
-                column: "CourseID");
+                name: "IX_Seat_RoomId",
+                table: "Seat",
+                column: "RoomId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Enrollment_StudentID",
-                table: "Enrollment",
-                column: "StudentID");
+                name: "IX_SeatShowing_SeatId",
+                table: "SeatShowing",
+                column: "SeatId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SeatShowing_ShowingId",
+                table: "SeatShowing",
+                column: "ShowingId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Showing_MovieId",
+                table: "Showing",
+                column: "MovieId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Showing_RoomId",
+                table: "Showing",
+                column: "RoomId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -292,19 +372,28 @@ namespace web.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Enrollment");
+                name: "Reservation");
+
+            migrationBuilder.DropTable(
+                name: "SeatShowing");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "Course");
-
-            migrationBuilder.DropTable(
-                name: "Student");
-
-            migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Seat");
+
+            migrationBuilder.DropTable(
+                name: "Showing");
+
+            migrationBuilder.DropTable(
+                name: "Movie");
+
+            migrationBuilder.DropTable(
+                name: "Room");
         }
     }
 }

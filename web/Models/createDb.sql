@@ -6,7 +6,7 @@ GO
 IF NOT EXISTS (
     SELECT name
         FROM sys.databases
-        WHERE name = N'university'
+        WHERE name = N'kino'
 )
 CREATE DATABASE university
 GO

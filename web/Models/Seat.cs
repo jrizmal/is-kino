@@ -5,8 +5,8 @@ namespace web.ModelsKino
 {
     public class Seat
     {
-        public int SeatID {get; set;}
-        public Room RoomID { get; set; }
+        public int SeatId {get; set;}
+        public Room Room { get; set; }
         public int Row { get; set; }
         public int Number { get; set; }
     }

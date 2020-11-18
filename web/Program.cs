@@ -27,7 +27,7 @@ namespace web
                 var services = scope.ServiceProvider;
                 try
                 {
-                    var context = services.GetRequiredService<UniversityContext>();
+                    var context = services.GetRequiredService<KinoContext>();
                     // context.Database.EnsureCreated();
                     DbInitializer.Initialize(context);
                 }

@@ -3,14 +3,13 @@ using System.Collections.Generic;
 
 namespace web.ModelsKino
 {
-    public class Showing
+    public class Movie
     {
-        public int ShowingID {get; set;}
-        public Movie MovieID { get; set; }
-        public Room RoomID { get; set; }
+        public int MovieId { get; set; }
         public string Name { get; set; }
         public string Rating { get; set; }
         public string Length { get; set; }
-        public DateTime StartTime { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
     }
 }
