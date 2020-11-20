@@ -8,21 +8,106 @@ namespace web.Data
     {
         public static void Initialize(KinoContext ctx)
         {
-
-
             ctx.Database.EnsureCreated();
+
+            if (!ctx.genres.Any()){
+                var genres = new Genre[]{
+                    new Genre{GenreName="Action"},
+                    new Genre{GenreName="Horror"},
+                    new Genre{GenreName="Drama"},
+                    new Genre{GenreName="Comedy"},
+                    new Genre{GenreName="Animation"},
+                    new Genre{GenreName="Science fiction"},
+                    new Genre{GenreName="Romance"},
+                    new Genre{GenreName="Musical"},
+                    new Genre{GenreName="Thriller"},
+                    new Genre{GenreName="Horror"}
+                };
+                ctx.genres.AddRange(genres);
+                ctx.SaveChanges();
+            }
+
+            if (!ctx.people.Any()){
+                var people = new People[]{
+                    // The Fast and the Furious: Tokyo Drif
+                    new People{Name="Justin Lin"},
+                    new People{Name="Lucas Black"},
+                    new People{Name="Bow Wow"},
+                    // Godzilla: King of the Monsters
+                    new People{Name="Michael Dougherty"},
+                    new People{Name="Kyle Chandler"},
+                    new People{Name="Vera Farmiga"},
+                    new People{Name="Millie Bobby Brown"},
+                    // Anchorman 2: The Legend Continues
+                    new People{Name="Adam McKay"},
+                    new People{Name="Will Ferrell"},
+                    new People{Name="Steve Carell"},
+                    // The Hateful Eight
+                    new People{Name="Quentin Tarantino"},
+                    new People{Name="Samuel L. Jackson"},
+                    new People{Name="Kurt Russell"},
+                    // Creed
+                    new People{Name="Ryan Coogler"},
+                    new People{Name="Michael B. Jordan"},
+                    new People{Name="Sylvester Stallone"},
+                    // Jurassic World
+                    new People{Name="Colin Trevorrow"},
+                    new People{Name="Chris Pratt"},
+                    new People{Name="Bryce Dallas Howard"},
+                    // Inside Out 
+                    new People{Name="Pete Docter"},
+                    new People{Name="Amy Poehler"},
+                    new People{Name="Phyllis Smith"}
+                };
+                ctx.people.AddRange(people);
+                ctx.SaveChanges();
+            }
+
+            Room[] rooms = null;
+            if (!ctx.rooms.Any()){
+                rooms = new Room[]{
+                    new Room{Name="Dvorana 1"},
+                    new Room{Name="Dvorana 2"},
+                    new Room{Name="Dvorana 3"},
+                    new Room{Name="Dvorana 4"}
+                };
+                ctx.rooms.AddRange(rooms);
+                ctx.SaveChanges();
+            }
+
+            if (!ctx.seats.Any() && rooms != null){
+                var seats = new Seat[4*12*30];
+                
+                int c = 0;
+                
+                for(int room = 0; room <= 3; room++){
+                    for(int row = 1; row <= 12; row++){
+                        for(int number = 1; number <= 30; number++){
+                            seats[c++] = new Seat{Room=rooms[room],Row=row,Number=number};
+                        }
+                    }
+                }
+                ctx.seats.AddRange(seats);
+                ctx.SaveChanges();
+            }
 
             if (ctx.movies.Any())
             {
                 return;
             }
             var movies = new Movie[]{
-new Movie{Name="Hitri in drzni 3",Rating="8,3",Length="122",StartDate=new DateTime(2020,7,1),EndDate=new DateTime(2020,12,30)},
-new Movie{Name="Godzilla: King of the monsters",Rating="10",Length="134",StartDate=new DateTime(2020,3,1),EndDate=new DateTime(2020,7,30)},
-new Movie{Name="Anchorman 2",Rating="9,4",Length="97",StartDate=new DateTime(2020,8,1),EndDate=new DateTime(2020,12,30)},
+                new Movie{Name="Fast and Furious: Tokyo Drift",Rating="PG-13",Length="122", StartDate=new DateTime(2020,9,30),EndDate=new DateTime(2021,1,23)},
+                new Movie{Name="Godzilla: King of the monsters",Rating="PG-13",Length="134",StartDate=new DateTime(2020,9,21),EndDate=new DateTime(2021,1,15)},
+                new Movie{Name="Anchorman 2",Rating="PG-13",Length="119",StartDate=new DateTime(2020,8,3),EndDate=new DateTime(2020,12,30)},
+                new Movie{Name="Hateful eight",Rating="R",Length="168",StartDate=new DateTime(2020,7,5),EndDate=new DateTime(2020,12,15)},
+                new Movie{Name="Creed",Rating="PG-13",Length="133",StartDate=new DateTime(2020,7,17),EndDate=new DateTime(2020,12,11)},
+                new Movie{Name="Jurassic World",Rating="PG-13",Length="124",StartDate=new DateTime(2020,6,9),EndDate=new DateTime(2020,12,1)},
+                new Movie{Name="Inside Out",Rating="PG",Length="95",StartDate=new DateTime(2020,8,12),EndDate=new DateTime(2020,12,25)}
             };
             ctx.movies.AddRange(movies);
             ctx.SaveChanges();
+
+
             /* DB doesn't have any data */
             /* var students = new Student[]
             {

@@ -22,7 +22,8 @@ namespace web.Controllers
         // GET: Reservation
         public async Task<IActionResult> Index()
         {
-            return View(await _context.reservations.ToListAsync());
+            var kinoContext = _context.reservations.Include(r => r.Showing);
+            return View(await kinoContext.ToListAsync());
         }
 
         // GET: Reservation/Details/5
@@ -34,6 +35,7 @@ namespace web.Controllers
             }
 
             var reservation = await _context.reservations
+                .Include(r => r.Showing)
                 .FirstOrDefaultAsync(m => m.ReservationId == id);
             if (reservation == null)
             {
@@ -46,6 +48,7 @@ namespace web.Controllers
         // GET: Reservation/Create
         public IActionResult Create()
         {
+            ViewData["ShowingID"] = new SelectList(_context.showings, "ShowingId", "ShowingId");
             return View();
         }
 
@@ -54,7 +57,7 @@ namespace web.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ReservationId,Seats,Price")] Reservation reservation)
+        public async Task<IActionResult> Create([Bind("ReservationId,ShowingID,Seats,Price")] Reservation reservation)
         {
             if (ModelState.IsValid)
             {
@@ -62,6 +65,7 @@ namespace web.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["ShowingID"] = new SelectList(_context.showings, "ShowingId", "ShowingId", reservation.ShowingID);
             return View(reservation);
         }
 
@@ -78,6 +82,7 @@ namespace web.Controllers
             {
                 return NotFound();
             }
+            ViewData["ShowingID"] = new SelectList(_context.showings, "ShowingId", "ShowingId", reservation.ShowingID);
             return View(reservation);
         }
 
@@ -86,7 +91,7 @@ namespace web.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ReservationId,Seats,Price")] Reservation reservation)
+        public async Task<IActionResult> Edit(int id, [Bind("ReservationId,ShowingID,Seats,Price")] Reservation reservation)
         {
             if (id != reservation.ReservationId)
             {
@@ -113,6 +118,7 @@ namespace web.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["ShowingID"] = new SelectList(_context.showings, "ShowingId", "ShowingId", reservation.ShowingID);
             return View(reservation);
         }
 
@@ -125,6 +131,7 @@ namespace web.Controllers
             }
 
             var reservation = await _context.reservations
+                .Include(r => r.Showing)
                 .FirstOrDefaultAsync(m => m.ReservationId == id);
             if (reservation == null)
             {

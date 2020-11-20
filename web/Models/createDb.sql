@@ -8,5 +8,5 @@ IF NOT EXISTS (
         FROM sys.databases
         WHERE name = N'kino'
 )
-CREATE DATABASE university
+CREATE DATABASE kino
 GO

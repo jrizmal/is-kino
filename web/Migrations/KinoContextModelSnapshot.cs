@@ -154,6 +154,28 @@ namespace web.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("web.Models.Actors", b =>
+                {
+                    b.Property<int>("ActorsID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("MovieId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PeopleID")
+                        .HasColumnType("int");
+
+                    b.HasKey("ActorsID");
+
+                    b.HasIndex("MovieId");
+
+                    b.HasIndex("PeopleID");
+
+                    b.ToTable("Actors");
+                });
+
             modelBuilder.Entity("web.Models.AppUser", b =>
                 {
                     b.Property<string>("Id")
@@ -228,7 +250,66 @@ namespace web.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("web.ModelsKino.Movie", b =>
+            modelBuilder.Entity("web.Models.Directors", b =>
+                {
+                    b.Property<int>("DirectorsID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("MovieId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PeopleID")
+                        .HasColumnType("int");
+
+                    b.HasKey("DirectorsID");
+
+                    b.HasIndex("MovieId");
+
+                    b.HasIndex("PeopleID");
+
+                    b.ToTable("Directors");
+                });
+
+            modelBuilder.Entity("web.Models.Genre", b =>
+                {
+                    b.Property<int>("GenreID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("GenreName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("GenreID");
+
+                    b.ToTable("genres");
+                });
+
+            modelBuilder.Entity("web.Models.GenreMovie", b =>
+                {
+                    b.Property<int>("GenreMovieID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("GenreID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MovieId")
+                        .HasColumnType("int");
+
+                    b.HasKey("GenreMovieID");
+
+                    b.HasIndex("GenreID");
+
+                    b.HasIndex("MovieId");
+
+                    b.ToTable("GenreMovie");
+                });
+
+            modelBuilder.Entity("web.Models.Movie", b =>
                 {
                     b.Property<int>("MovieId")
                         .ValueGeneratedOnAdd()
@@ -255,7 +336,22 @@ namespace web.Migrations
                     b.ToTable("Movie");
                 });
 
-            modelBuilder.Entity("web.ModelsKino.Reservation", b =>
+            modelBuilder.Entity("web.Models.People", b =>
+                {
+                    b.Property<int>("PeopleID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("PeopleID");
+
+                    b.ToTable("people");
+                });
+
+            modelBuilder.Entity("web.Models.Reservation", b =>
                 {
                     b.Property<int>("ReservationId")
                         .ValueGeneratedOnAdd()
@@ -268,17 +364,17 @@ namespace web.Migrations
                     b.Property<int>("Seats")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ShowingId")
+                    b.Property<int>("ShowingID")
                         .HasColumnType("int");
 
                     b.HasKey("ReservationId");
 
-                    b.HasIndex("ShowingId");
+                    b.HasIndex("ShowingID");
 
                     b.ToTable("Reservation");
                 });
 
-            modelBuilder.Entity("web.ModelsKino.Room", b =>
+            modelBuilder.Entity("web.Models.Room", b =>
                 {
                     b.Property<int>("RoomId")
                         .ValueGeneratedOnAdd()
@@ -293,7 +389,7 @@ namespace web.Migrations
                     b.ToTable("Room");
                 });
 
-            modelBuilder.Entity("web.ModelsKino.Seat", b =>
+            modelBuilder.Entity("web.Models.Seat", b =>
                 {
                     b.Property<int>("SeatId")
                         .ValueGeneratedOnAdd()
@@ -316,17 +412,17 @@ namespace web.Migrations
                     b.ToTable("Seat");
                 });
 
-            modelBuilder.Entity("web.ModelsKino.SeatShowing", b =>
+            modelBuilder.Entity("web.Models.SeatShowing", b =>
                 {
                     b.Property<int>("SeatShowingId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("SeatId")
+                    b.Property<int>("SeatID")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ShowingId")
+                    b.Property<int>("ShowingID")
                         .HasColumnType("int");
 
                     b.Property<bool>("taken")
@@ -334,33 +430,24 @@ namespace web.Migrations
 
                     b.HasKey("SeatShowingId");
 
-                    b.HasIndex("SeatId");
+                    b.HasIndex("SeatID");
 
-                    b.HasIndex("ShowingId");
+                    b.HasIndex("ShowingID");
 
                     b.ToTable("SeatShowing");
                 });
 
-            modelBuilder.Entity("web.ModelsKino.Showing", b =>
+            modelBuilder.Entity("web.Models.Showing", b =>
                 {
                     b.Property<int>("ShowingId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Length")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("MovieId")
+                    b.Property<int>("MovieID")
                         .HasColumnType("int");
 
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Rating")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("RoomId")
+                    b.Property<int>("RoomID")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("StartTime")
@@ -368,9 +455,9 @@ namespace web.Migrations
 
                     b.HasKey("ShowingId");
 
-                    b.HasIndex("MovieId");
+                    b.HasIndex("MovieID");
 
-                    b.HasIndex("RoomId");
+                    b.HasIndex("RoomID");
 
                     b.ToTable("Showing");
                 });
@@ -426,40 +513,95 @@ namespace web.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("web.ModelsKino.Reservation", b =>
+            modelBuilder.Entity("web.Models.Actors", b =>
                 {
-                    b.HasOne("web.ModelsKino.Showing", "Showing")
+                    b.HasOne("web.Models.Movie", "Movie")
+                        .WithMany("Actors")
+                        .HasForeignKey("MovieId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("web.Models.People", "People")
                         .WithMany()
-                        .HasForeignKey("ShowingId");
+                        .HasForeignKey("PeopleID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
-            modelBuilder.Entity("web.ModelsKino.Seat", b =>
+            modelBuilder.Entity("web.Models.Directors", b =>
                 {
-                    b.HasOne("web.ModelsKino.Room", "Room")
+                    b.HasOne("web.Models.Movie", "Movie")
+                        .WithMany("Directors")
+                        .HasForeignKey("MovieId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("web.Models.People", "People")
+                        .WithMany()
+                        .HasForeignKey("PeopleID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("web.Models.GenreMovie", b =>
+                {
+                    b.HasOne("web.Models.Genre", "Genre")
+                        .WithMany("Movies")
+                        .HasForeignKey("GenreID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("web.Models.Movie", "Movie")
+                        .WithMany("Genres")
+                        .HasForeignKey("MovieId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("web.Models.Reservation", b =>
+                {
+                    b.HasOne("web.Models.Showing", "Showing")
+                        .WithMany()
+                        .HasForeignKey("ShowingID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("web.Models.Seat", b =>
+                {
+                    b.HasOne("web.Models.Room", "Room")
                         .WithMany()
                         .HasForeignKey("RoomId");
                 });
 
-            modelBuilder.Entity("web.ModelsKino.SeatShowing", b =>
+            modelBuilder.Entity("web.Models.SeatShowing", b =>
                 {
-                    b.HasOne("web.ModelsKino.Seat", "Seat")
+                    b.HasOne("web.Models.Seat", "Seat")
                         .WithMany()
-                        .HasForeignKey("SeatId");
+                        .HasForeignKey("SeatID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.HasOne("web.ModelsKino.Showing", "Showing")
+                    b.HasOne("web.Models.Showing", "Showing")
                         .WithMany()
-                        .HasForeignKey("ShowingId");
+                        .HasForeignKey("ShowingID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
-            modelBuilder.Entity("web.ModelsKino.Showing", b =>
+            modelBuilder.Entity("web.Models.Showing", b =>
                 {
-                    b.HasOne("web.ModelsKino.Movie", "Movie")
+                    b.HasOne("web.Models.Movie", "Movie")
                         .WithMany()
-                        .HasForeignKey("MovieId");
+                        .HasForeignKey("MovieID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.HasOne("web.ModelsKino.Room", "Room")
+                    b.HasOne("web.Models.Room", "Room")
                         .WithMany()
-                        .HasForeignKey("RoomId");
+                        .HasForeignKey("RoomID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }
