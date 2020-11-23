@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using web.Data;
 using web.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace web.Controllers
 {
@@ -22,8 +23,12 @@ namespace web.Controllers
         // GET: Showing
         public async Task<IActionResult> Index()
         {
-            var kinoContext = _context.showings.Include(s => s.Movie).Include(s => s.Room);
-            return View(await kinoContext.ToListAsync());
+            var showings = from s in _context.showings 
+                            select s;
+            showings = showings.OrderBy(s => s.StartTime);
+            showings = showings.Include(s => s.Movie).Include(s => s.Room);
+
+            return View(await showings.ToListAsync());
         }
 
         // GET: Showing/Details/5
@@ -47,6 +52,7 @@ namespace web.Controllers
         }
 
         // GET: Showing/Create
+        [Authorize(Roles = "Administrator")]
         public IActionResult Create()
         {
             ViewData["MovieID"] = new SelectList(_context.movies, "MovieID", "Title");
@@ -59,6 +65,7 @@ namespace web.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Create([Bind("ShowingID,MovieID,RoomID,StartTime")] Showing showing)
         {
             if (ModelState.IsValid)
@@ -73,6 +80,7 @@ namespace web.Controllers
         }
 
         // GET: Showing/Edit/5
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -95,6 +103,7 @@ namespace web.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Edit(int id, [Bind("ShowingID,MovieID,RoomID,StartTime")] Showing showing)
         {
             if (id != showing.ShowingID)
@@ -128,6 +137,7 @@ namespace web.Controllers
         }
 
         // GET: Showing/Delete/5
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -150,6 +160,7 @@ namespace web.Controllers
         // POST: Showing/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var showing = await _context.showings.FindAsync(id);

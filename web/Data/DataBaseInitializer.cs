@@ -66,10 +66,10 @@ namespace web.Data
             ctx.SaveChanges();
 
             Room[] rooms = new Room[]{
-                new Room{Name="Dvorana 1"},
-                new Room{Name="Dvorana 2"},
-                new Room{Name="Dvorana 3"},
-                new Room{Name="Dvorana 4"}
+                new Room{Name="Room 1"},
+                new Room{Name="Room 2"},
+                new Room{Name="Room 3"},
+                new Room{Name="Room 4"}
             };
             ctx.rooms.AddRange(rooms);
             ctx.SaveChanges();

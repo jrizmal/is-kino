@@ -10,7 +10,7 @@ using web.Data;
 namespace web.Migrations
 {
     [DbContext(typeof(KinoContext))]
-    [Migration("20201123032611_InitialCreate")]
+    [Migration("20201123180640_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

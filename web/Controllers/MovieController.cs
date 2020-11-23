@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using web.Data;
 using web.Models;
 using Microsoft.AspNetCore.Authorization;
+using web.Models.KinoViewModels;
 
 namespace web.Controllers
 {
@@ -23,13 +24,16 @@ namespace web.Controllers
         // GET: Movie
         public async Task<IActionResult> Index()
         {
-            return View(await _context.movies.ToListAsync());
+            var movies = from s in _context.movies 
+                            select s;
+            movies = movies.OrderBy(m => m.Title);
+            return View(await movies.ToListAsync());
         }
 
-        // GET: Movie/Details/5
+        //GET: Movie/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null)
+            if (id == null) 
             {
                 return NotFound();
             }
@@ -54,9 +58,9 @@ namespace web.Controllers
         // POST: Movie/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [Authorize(Roles = "Administrator")]
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Create([Bind("MovieID,Title,Rating,Length,StartDate,EndDate")] Movie movie)
         {
             if (ModelState.IsValid)

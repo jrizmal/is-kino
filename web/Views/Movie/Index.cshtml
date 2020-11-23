@@ -40,7 +40,7 @@
                 @Html.DisplayFor(modelItem => item.Rating)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Length)
+                @Html.DisplayFor(modelItem => item.Length) min
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.StartDate)
@@ -50,6 +50,14 @@
             </td>
 
             @* display genres *@
+            @* <td>
+                    @if (item.GenreMovies != null){
+                        foreach (var genre in item.GenreMovies)
+                        {
+                            @genre.Genre.GenreName <br />
+                        }
+                    }
+            </td> *@
 
             <td>
                 <a asp-action="Edit" asp-route-id="@item.MovieID">Edit</a> |

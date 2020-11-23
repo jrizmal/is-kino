@@ -8,12 +8,15 @@ namespace web.Models
     {
         public int ShowingID {get; set;}
         [Required]
+        [Display(Name = "Title")]
         public int MovieID { get; set; }
         [Required]
+        [Display(Name = "Room")]
         public int RoomID { get; set; }
         [Required]
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy H:mm}", ApplyFormatInEditMode = true)]
+        [DataType(DataType.DateTime)]
+        [DisplayFormat(DataFormatString = "{0:dd.MM.yyyy - H:mm}", ApplyFormatInEditMode = true)]
+        [Display(Name = "Start time")]
         public DateTime StartTime { get; set; }
 
         public Movie Movie { get; set; }
