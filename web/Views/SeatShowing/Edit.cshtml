@@ -12,7 +12,7 @@
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="SeatShowingId" />
+            <input type="hidden" asp-for="SeatShowingID" />
             <div class="form-group">
                 <label asp-for="SeatID" class="control-label"></label>
                 <select asp-for="SeatID" class="form-control" asp-items="ViewBag.SeatID"></select>
@@ -25,7 +25,7 @@
             </div>
             <div class="form-group form-check">
                 <label class="form-check-label">
-                    <input class="form-check-input" asp-for="taken" /> @Html.DisplayNameFor(model => model.taken)
+                    <input class="form-check-input" asp-for="Taken" /> @Html.DisplayNameFor(model => model.Taken)
                 </label>
             </div>
             <div class="form-group">

@@ -34,7 +34,7 @@ namespace web.Controllers
             }
 
             var seat = await _context.seats
-                .FirstOrDefaultAsync(m => m.SeatId == id);
+                .FirstOrDefaultAsync(m => m.SeatID == id);
             if (seat == null)
             {
                 return NotFound();
@@ -54,7 +54,7 @@ namespace web.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("SeatId,Row,Number")] Seat seat)
+        public async Task<IActionResult> Create([Bind("SeatID,Row,Number")] Seat seat)
         {
             if (ModelState.IsValid)
             {
@@ -86,9 +86,9 @@ namespace web.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("SeatId,Row,Number")] Seat seat)
+        public async Task<IActionResult> Edit(int id, [Bind("SeatID,Row,Number")] Seat seat)
         {
-            if (id != seat.SeatId)
+            if (id != seat.SeatID)
             {
                 return NotFound();
             }
@@ -102,7 +102,7 @@ namespace web.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!SeatExists(seat.SeatId))
+                    if (!SeatExists(seat.SeatID))
                     {
                         return NotFound();
                     }
@@ -125,7 +125,7 @@ namespace web.Controllers
             }
 
             var seat = await _context.seats
-                .FirstOrDefaultAsync(m => m.SeatId == id);
+                .FirstOrDefaultAsync(m => m.SeatID == id);
             if (seat == null)
             {
                 return NotFound();
@@ -147,7 +147,7 @@ namespace web.Controllers
 
         private bool SeatExists(int id)
         {
-            return _context.seats.Any(e => e.SeatId == id);
+            return _context.seats.Any(e => e.SeatID == id);
         }
     }
 }

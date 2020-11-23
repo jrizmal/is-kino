@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using web.Data;
 using web.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace web.Controllers
 {
@@ -34,7 +35,7 @@ namespace web.Controllers
             }
 
             var movie = await _context.movies
-                .FirstOrDefaultAsync(m => m.MovieId == id);
+                .FirstOrDefaultAsync(m => m.MovieID == id);
             if (movie == null)
             {
                 return NotFound();
@@ -44,6 +45,7 @@ namespace web.Controllers
         }
 
         // GET: Movie/Create
+        [Authorize(Roles = "Administrator")]
         public IActionResult Create()
         {
             return View();
@@ -52,9 +54,10 @@ namespace web.Controllers
         // POST: Movie/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Administrator")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("MovieId,Name,Rating,Length,StartDate,EndDate")] Movie movie)
+        public async Task<IActionResult> Create([Bind("MovieID,Title,Rating,Length,StartDate,EndDate")] Movie movie)
         {
             if (ModelState.IsValid)
             {
@@ -66,6 +69,7 @@ namespace web.Controllers
         }
 
         // GET: Movie/Edit/5
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -86,9 +90,10 @@ namespace web.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("MovieId,Name,Rating,Length,StartDate,EndDate")] Movie movie)
+        [Authorize(Roles = "Administrator")]
+        public async Task<IActionResult> Edit(int id, [Bind("MovieID,Title,Rating,Length,StartDate,EndDate")] Movie movie)
         {
-            if (id != movie.MovieId)
+            if (id != movie.MovieID)
             {
                 return NotFound();
             }
@@ -102,7 +107,7 @@ namespace web.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!MovieExists(movie.MovieId))
+                    if (!MovieExists(movie.MovieID))
                     {
                         return NotFound();
                     }
@@ -117,6 +122,7 @@ namespace web.Controllers
         }
 
         // GET: Movie/Delete/5
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -125,7 +131,7 @@ namespace web.Controllers
             }
 
             var movie = await _context.movies
-                .FirstOrDefaultAsync(m => m.MovieId == id);
+                .FirstOrDefaultAsync(m => m.MovieID == id);
             if (movie == null)
             {
                 return NotFound();
@@ -137,6 +143,7 @@ namespace web.Controllers
         // POST: Movie/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var movie = await _context.movies.FindAsync(id);
@@ -147,7 +154,7 @@ namespace web.Controllers
 
         private bool MovieExists(int id)
         {
-            return _context.movies.Any(e => e.MovieId == id);
+            return _context.movies.Any(e => e.MovieID == id);
         }
     }
 }

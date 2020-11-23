@@ -40,9 +40,9 @@ namespace web.Migrations
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
                     AccessFailedCount = table.Column<int>(nullable: false),
-                    firstName = table.Column<string>(nullable: true),
-                    lastName = table.Column<string>(nullable: true),
-                    city = table.Column<string>(nullable: true)
+                    FirstName = table.Column<string>(nullable: true),
+                    LastName = table.Column<string>(nullable: true),
+                    City = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -55,7 +55,7 @@ namespace web.Migrations
                 {
                     GenreID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    GenreName = table.Column<string>(nullable: true)
+                    GenreName = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -66,17 +66,17 @@ namespace web.Migrations
                 name: "Movie",
                 columns: table => new
                 {
-                    MovieId = table.Column<int>(nullable: false)
+                    MovieID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(nullable: true),
-                    Rating = table.Column<string>(nullable: true),
-                    Length = table.Column<string>(nullable: true),
+                    Title = table.Column<string>(nullable: false),
+                    Rating = table.Column<string>(nullable: false),
+                    Length = table.Column<string>(nullable: false),
                     StartDate = table.Column<DateTime>(nullable: false),
                     EndDate = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Movie", x => x.MovieId);
+                    table.PrimaryKey("PK_Movie", x => x.MovieID);
                 });
 
             migrationBuilder.CreateTable(
@@ -85,7 +85,7 @@ namespace web.Migrations
                 {
                     PeopleID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(nullable: true)
+                    Name = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -98,7 +98,7 @@ namespace web.Migrations
                 {
                     RoomId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(nullable: true)
+                    Name = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -217,7 +217,7 @@ namespace web.Migrations
                 {
                     GenreMovieID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    MovieId = table.Column<int>(nullable: false),
+                    MovieID = table.Column<int>(nullable: false),
                     GenreID = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -230,10 +230,10 @@ namespace web.Migrations
                         principalColumn: "GenreID",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_GenreMovie_Movie_MovieId",
-                        column: x => x.MovieId,
+                        name: "FK_GenreMovie_Movie_MovieID",
+                        column: x => x.MovieID,
                         principalTable: "Movie",
-                        principalColumn: "MovieId",
+                        principalColumn: "MovieID",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -243,17 +243,17 @@ namespace web.Migrations
                 {
                     ActorsID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    MovieId = table.Column<int>(nullable: false),
+                    MovieID = table.Column<int>(nullable: false),
                     PeopleID = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Actors", x => x.ActorsID);
                     table.ForeignKey(
-                        name: "FK_Actors_Movie_MovieId",
-                        column: x => x.MovieId,
+                        name: "FK_Actors_Movie_MovieID",
+                        column: x => x.MovieID,
                         principalTable: "Movie",
-                        principalColumn: "MovieId",
+                        principalColumn: "MovieID",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Actors_people_PeopleID",
@@ -269,17 +269,17 @@ namespace web.Migrations
                 {
                     DirectorsID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    MovieId = table.Column<int>(nullable: false),
+                    MovieID = table.Column<int>(nullable: false),
                     PeopleID = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Directors", x => x.DirectorsID);
                     table.ForeignKey(
-                        name: "FK_Directors_Movie_MovieId",
-                        column: x => x.MovieId,
+                        name: "FK_Directors_Movie_MovieID",
+                        column: x => x.MovieID,
                         principalTable: "Movie",
-                        principalColumn: "MovieId",
+                        principalColumn: "MovieID",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Directors_people_PeopleID",
@@ -293,28 +293,28 @@ namespace web.Migrations
                 name: "Seat",
                 columns: table => new
                 {
-                    SeatId = table.Column<int>(nullable: false)
+                    SeatID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    RoomId = table.Column<int>(nullable: true),
+                    RoomId = table.Column<int>(nullable: false),
                     Row = table.Column<int>(nullable: false),
                     Number = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Seat", x => x.SeatId);
+                    table.PrimaryKey("PK_Seat", x => x.SeatID);
                     table.ForeignKey(
                         name: "FK_Seat_Room_RoomId",
                         column: x => x.RoomId,
                         principalTable: "Room",
                         principalColumn: "RoomId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Showing",
                 columns: table => new
                 {
-                    ShowingId = table.Column<int>(nullable: false)
+                    ShowingID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     MovieID = table.Column<int>(nullable: false),
                     RoomID = table.Column<int>(nullable: false),
@@ -322,12 +322,12 @@ namespace web.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Showing", x => x.ShowingId);
+                    table.PrimaryKey("PK_Showing", x => x.ShowingID);
                     table.ForeignKey(
                         name: "FK_Showing_Movie_MovieID",
                         column: x => x.MovieID,
                         principalTable: "Movie",
-                        principalColumn: "MovieId",
+                        principalColumn: "MovieID",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Showing_Room_RoomID",
@@ -354,7 +354,7 @@ namespace web.Migrations
                         name: "FK_Reservation_Showing_ShowingID",
                         column: x => x.ShowingID,
                         principalTable: "Showing",
-                        principalColumn: "ShowingId",
+                        principalColumn: "ShowingID",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -362,33 +362,33 @@ namespace web.Migrations
                 name: "SeatShowing",
                 columns: table => new
                 {
-                    SeatShowingId = table.Column<int>(nullable: false)
+                    SeatShowingID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     SeatID = table.Column<int>(nullable: false),
-                    ShowingID = table.Column<int>(nullable: false),
-                    taken = table.Column<bool>(nullable: false)
+                    ShowingID = table.Column<int>(nullable: true),
+                    Taken = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_SeatShowing", x => x.SeatShowingId);
+                    table.PrimaryKey("PK_SeatShowing", x => x.SeatShowingID);
                     table.ForeignKey(
                         name: "FK_SeatShowing_Seat_SeatID",
                         column: x => x.SeatID,
                         principalTable: "Seat",
-                        principalColumn: "SeatId",
+                        principalColumn: "SeatID",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_SeatShowing_Showing_ShowingID",
                         column: x => x.ShowingID,
                         principalTable: "Showing",
-                        principalColumn: "ShowingId",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "ShowingID",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Actors_MovieId",
+                name: "IX_Actors_MovieID",
                 table: "Actors",
-                column: "MovieId");
+                column: "MovieID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Actors_PeopleID",
@@ -435,9 +435,9 @@ namespace web.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Directors_MovieId",
+                name: "IX_Directors_MovieID",
                 table: "Directors",
-                column: "MovieId");
+                column: "MovieID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Directors_PeopleID",
@@ -450,9 +450,9 @@ namespace web.Migrations
                 column: "GenreID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_GenreMovie_MovieId",
+                name: "IX_GenreMovie_MovieID",
                 table: "GenreMovie",
-                column: "MovieId");
+                column: "MovieID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Reservation_ShowingID",

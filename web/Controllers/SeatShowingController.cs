@@ -37,7 +37,7 @@ namespace web.Controllers
             var seatShowing = await _context.seatShowing
                 .Include(s => s.Seat)
                 .Include(s => s.Showing)
-                .FirstOrDefaultAsync(m => m.SeatShowingId == id);
+                .FirstOrDefaultAsync(m => m.SeatShowingID == id);
             if (seatShowing == null)
             {
                 return NotFound();
@@ -49,8 +49,8 @@ namespace web.Controllers
         // GET: SeatShowing/Create
         public IActionResult Create()
         {
-            ViewData["SeatID"] = new SelectList(_context.seats, "SeatId", "SeatId");
-            ViewData["ShowingID"] = new SelectList(_context.showings, "ShowingId", "ShowingId");
+            ViewData["SeatID"] = new SelectList(_context.seats, "SeatID", "SeatID");
+            ViewData["ShowingID"] = new SelectList(_context.showings, "ShowingID", "ShowingID");
             return View();
         }
 
@@ -59,7 +59,7 @@ namespace web.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("SeatShowingId,SeatID,ShowingID,taken")] SeatShowing seatShowing)
+        public async Task<IActionResult> Create([Bind("SeatShowingID,SeatID,ShowingID,Taken")] SeatShowing seatShowing)
         {
             if (ModelState.IsValid)
             {
@@ -67,8 +67,8 @@ namespace web.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["SeatID"] = new SelectList(_context.seats, "SeatId", "SeatId", seatShowing.SeatID);
-            ViewData["ShowingID"] = new SelectList(_context.showings, "ShowingId", "ShowingId", seatShowing.ShowingID);
+            ViewData["SeatID"] = new SelectList(_context.seats, "SeatID", "SeatID", seatShowing.SeatID);
+            ViewData["ShowingID"] = new SelectList(_context.showings, "ShowingID", "ShowingID", seatShowing.ShowingID);
             return View(seatShowing);
         }
 
@@ -85,8 +85,8 @@ namespace web.Controllers
             {
                 return NotFound();
             }
-            ViewData["SeatID"] = new SelectList(_context.seats, "SeatId", "SeatId", seatShowing.SeatID);
-            ViewData["ShowingID"] = new SelectList(_context.showings, "ShowingId", "ShowingId", seatShowing.ShowingID);
+            ViewData["SeatID"] = new SelectList(_context.seats, "SeatID", "SeatID", seatShowing.SeatID);
+            ViewData["ShowingID"] = new SelectList(_context.showings, "ShowingID", "ShowingID", seatShowing.ShowingID);
             return View(seatShowing);
         }
 
@@ -95,9 +95,9 @@ namespace web.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("SeatShowingId,SeatID,ShowingID,taken")] SeatShowing seatShowing)
+        public async Task<IActionResult> Edit(int id, [Bind("SeatShowingID,SeatID,ShowingID,Taken")] SeatShowing seatShowing)
         {
-            if (id != seatShowing.SeatShowingId)
+            if (id != seatShowing.SeatShowingID)
             {
                 return NotFound();
             }
@@ -111,7 +111,7 @@ namespace web.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!SeatShowingExists(seatShowing.SeatShowingId))
+                    if (!SeatShowingExists(seatShowing.SeatShowingID))
                     {
                         return NotFound();
                     }
@@ -122,8 +122,8 @@ namespace web.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["SeatID"] = new SelectList(_context.seats, "SeatId", "SeatId", seatShowing.SeatID);
-            ViewData["ShowingID"] = new SelectList(_context.showings, "ShowingId", "ShowingId", seatShowing.ShowingID);
+            ViewData["SeatID"] = new SelectList(_context.seats, "SeatID", "SeatID", seatShowing.SeatID);
+            ViewData["ShowingID"] = new SelectList(_context.showings, "ShowingID", "ShowingID", seatShowing.ShowingID);
             return View(seatShowing);
         }
 
@@ -138,7 +138,7 @@ namespace web.Controllers
             var seatShowing = await _context.seatShowing
                 .Include(s => s.Seat)
                 .Include(s => s.Showing)
-                .FirstOrDefaultAsync(m => m.SeatShowingId == id);
+                .FirstOrDefaultAsync(m => m.SeatShowingID == id);
             if (seatShowing == null)
             {
                 return NotFound();
@@ -160,7 +160,7 @@ namespace web.Controllers
 
         private bool SeatShowingExists(int id)
         {
-            return _context.seatShowing.Any(e => e.SeatShowingId == id);
+            return _context.seatShowing.Any(e => e.SeatShowingID == id);
         }
     }
 }

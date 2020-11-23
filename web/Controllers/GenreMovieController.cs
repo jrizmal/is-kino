@@ -22,7 +22,7 @@ namespace web.Controllers
         // GET: GenreMovie
         public async Task<IActionResult> Index()
         {
-            var kinoContext = _context.GenreMovie.Include(g => g.Genre).Include(g => g.Movie);
+            var kinoContext = _context.GenreMovies.Include(g => g.Genre).Include(g => g.Movie);
             return View(await kinoContext.ToListAsync());
         }
 
@@ -34,7 +34,7 @@ namespace web.Controllers
                 return NotFound();
             }
 
-            var genreMovie = await _context.GenreMovie
+            var genreMovie = await _context.GenreMovies
                 .Include(g => g.Genre)
                 .Include(g => g.Movie)
                 .FirstOrDefaultAsync(m => m.GenreMovieID == id);
@@ -49,8 +49,8 @@ namespace web.Controllers
         // GET: GenreMovie/Create
         public IActionResult Create()
         {
-            ViewData["GenreID"] = new SelectList(_context.genres, "GenreID", "GenreID");
-            ViewData["MovieId"] = new SelectList(_context.movies, "MovieId", "MovieId");
+            ViewData["GenreID"] = new SelectList(_context.genres, "GenreID", "GenreName");
+            ViewData["MovieID"] = new SelectList(_context.movies, "MovieID", "Title");
             return View();
         }
 
@@ -59,7 +59,7 @@ namespace web.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("GenreMovieID,MovieId,GenreID")] GenreMovie genreMovie)
+        public async Task<IActionResult> Create([Bind("GenreMovieID,MovieID,GenreID")] GenreMovie genreMovie)
         {
             if (ModelState.IsValid)
             {
@@ -67,8 +67,8 @@ namespace web.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["GenreID"] = new SelectList(_context.genres, "GenreID", "GenreID", genreMovie.GenreID);
-            ViewData["MovieId"] = new SelectList(_context.movies, "MovieId", "MovieId", genreMovie.MovieId);
+            ViewData["GenreID"] = new SelectList(_context.genres, "GenreID", "GenreName", genreMovie.GenreID);
+            ViewData["MovieID"] = new SelectList(_context.movies, "MovieID", "Title", genreMovie.MovieID);
             return View(genreMovie);
         }
 
@@ -80,13 +80,13 @@ namespace web.Controllers
                 return NotFound();
             }
 
-            var genreMovie = await _context.GenreMovie.FindAsync(id);
+            var genreMovie = await _context.GenreMovies.FindAsync(id);
             if (genreMovie == null)
             {
                 return NotFound();
             }
-            ViewData["GenreID"] = new SelectList(_context.genres, "GenreID", "GenreID", genreMovie.GenreID);
-            ViewData["MovieId"] = new SelectList(_context.movies, "MovieId", "MovieId", genreMovie.MovieId);
+            ViewData["GenreID"] = new SelectList(_context.genres, "GenreID", "GenreName", genreMovie.GenreID);
+            ViewData["MovieID"] = new SelectList(_context.movies, "MovieID", "Title", genreMovie.MovieID);
             return View(genreMovie);
         }
 
@@ -95,7 +95,7 @@ namespace web.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("GenreMovieID,MovieId,GenreID")] GenreMovie genreMovie)
+        public async Task<IActionResult> Edit(int id, [Bind("GenreMovieID,MovieID,GenreID")] GenreMovie genreMovie)
         {
             if (id != genreMovie.GenreMovieID)
             {
@@ -122,8 +122,8 @@ namespace web.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["GenreID"] = new SelectList(_context.genres, "GenreID", "GenreID", genreMovie.GenreID);
-            ViewData["MovieId"] = new SelectList(_context.movies, "MovieId", "MovieId", genreMovie.MovieId);
+            ViewData["GenreID"] = new SelectList(_context.genres, "GenreID", "GenreName", genreMovie.GenreID);
+            ViewData["MovieID"] = new SelectList(_context.movies, "MovieID", "Title", genreMovie.MovieID);
             return View(genreMovie);
         }
 
@@ -135,7 +135,7 @@ namespace web.Controllers
                 return NotFound();
             }
 
-            var genreMovie = await _context.GenreMovie
+            var genreMovie = await _context.GenreMovies
                 .Include(g => g.Genre)
                 .Include(g => g.Movie)
                 .FirstOrDefaultAsync(m => m.GenreMovieID == id);
@@ -152,15 +152,15 @@ namespace web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var genreMovie = await _context.GenreMovie.FindAsync(id);
-            _context.GenreMovie.Remove(genreMovie);
+            var genreMovie = await _context.GenreMovies.FindAsync(id);
+            _context.GenreMovies.Remove(genreMovie);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool GenreMovieExists(int id)
         {
-            return _context.GenreMovie.Any(e => e.GenreMovieID == id);
+            return _context.GenreMovies.Any(e => e.GenreMovieID == id);
         }
     }
 }

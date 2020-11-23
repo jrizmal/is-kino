@@ -37,7 +37,7 @@ namespace web.Controllers
             var showing = await _context.showings
                 .Include(s => s.Movie)
                 .Include(s => s.Room)
-                .FirstOrDefaultAsync(m => m.ShowingId == id);
+                .FirstOrDefaultAsync(m => m.ShowingID == id);
             if (showing == null)
             {
                 return NotFound();
@@ -49,8 +49,8 @@ namespace web.Controllers
         // GET: Showing/Create
         public IActionResult Create()
         {
-            ViewData["MovieID"] = new SelectList(_context.movies, "MovieId", "MovieId");
-            ViewData["RoomID"] = new SelectList(_context.rooms, "RoomId", "RoomId");
+            ViewData["MovieID"] = new SelectList(_context.movies, "MovieID", "Title");
+            ViewData["RoomID"] = new SelectList(_context.rooms, "RoomId", "Name");
             return View();
         }
 
@@ -59,7 +59,7 @@ namespace web.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ShowingId,MovieID,RoomID,StartTime")] Showing showing)
+        public async Task<IActionResult> Create([Bind("ShowingID,MovieID,RoomID,StartTime")] Showing showing)
         {
             if (ModelState.IsValid)
             {
@@ -67,8 +67,8 @@ namespace web.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["MovieID"] = new SelectList(_context.movies, "MovieId", "MovieId", showing.MovieID);
-            ViewData["RoomID"] = new SelectList(_context.rooms, "RoomId", "RoomId", showing.RoomID);
+            ViewData["MovieID"] = new SelectList(_context.movies, "MovieID", "Title", showing.MovieID);
+            ViewData["RoomID"] = new SelectList(_context.rooms, "RoomId", "Name", showing.RoomID);
             return View(showing);
         }
 
@@ -85,8 +85,8 @@ namespace web.Controllers
             {
                 return NotFound();
             }
-            ViewData["MovieID"] = new SelectList(_context.movies, "MovieId", "MovieId", showing.MovieID);
-            ViewData["RoomID"] = new SelectList(_context.rooms, "RoomId", "RoomId", showing.RoomID);
+            ViewData["MovieID"] = new SelectList(_context.movies, "MovieID", "Title", showing.MovieID);
+            ViewData["RoomID"] = new SelectList(_context.rooms, "RoomId", "Name", showing.RoomID);
             return View(showing);
         }
 
@@ -95,9 +95,9 @@ namespace web.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ShowingId,MovieID,RoomID,StartTime")] Showing showing)
+        public async Task<IActionResult> Edit(int id, [Bind("ShowingID,MovieID,RoomID,StartTime")] Showing showing)
         {
-            if (id != showing.ShowingId)
+            if (id != showing.ShowingID)
             {
                 return NotFound();
             }
@@ -111,7 +111,7 @@ namespace web.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ShowingExists(showing.ShowingId))
+                    if (!ShowingExists(showing.ShowingID))
                     {
                         return NotFound();
                     }
@@ -122,8 +122,8 @@ namespace web.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["MovieID"] = new SelectList(_context.movies, "MovieId", "MovieId", showing.MovieID);
-            ViewData["RoomID"] = new SelectList(_context.rooms, "RoomId", "RoomId", showing.RoomID);
+            ViewData["MovieID"] = new SelectList(_context.movies, "MovieID", "Title", showing.MovieID);
+            ViewData["RoomID"] = new SelectList(_context.rooms, "RoomId", "Name", showing.RoomID);
             return View(showing);
         }
 
@@ -138,7 +138,7 @@ namespace web.Controllers
             var showing = await _context.showings
                 .Include(s => s.Movie)
                 .Include(s => s.Room)
-                .FirstOrDefaultAsync(m => m.ShowingId == id);
+                .FirstOrDefaultAsync(m => m.ShowingID == id);
             if (showing == null)
             {
                 return NotFound();
@@ -160,7 +160,7 @@ namespace web.Controllers
 
         private bool ShowingExists(int id)
         {
-            return _context.showings.Any(e => e.ShowingId == id);
+            return _context.showings.Any(e => e.ShowingID == id);
         }
     }
 }

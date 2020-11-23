@@ -49,8 +49,8 @@ namespace web.Controllers
         // GET: Actors/Create
         public IActionResult Create()
         {
-            ViewData["MovieId"] = new SelectList(_context.movies, "MovieId", "MovieId");
-            ViewData["PeopleID"] = new SelectList(_context.people, "PeopleID", "PeopleID");
+            ViewData["MovieID"] = new SelectList(_context.movies, "MovieID", "Title");
+            ViewData["PeopleID"] = new SelectList(_context.people, "PeopleID", "Name");
             return View();
         }
 
@@ -59,7 +59,7 @@ namespace web.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ActorsID,MovieId,PeopleID")] Actors actors)
+        public async Task<IActionResult> Create([Bind("ActorsID,MovieID,PeopleID")] Actors actors)
         {
             if (ModelState.IsValid)
             {
@@ -67,8 +67,8 @@ namespace web.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["MovieId"] = new SelectList(_context.movies, "MovieId", "MovieId", actors.MovieId);
-            ViewData["PeopleID"] = new SelectList(_context.people, "PeopleID", "PeopleID", actors.PeopleID);
+            ViewData["MovieID"] = new SelectList(_context.movies, "MovieID", "Title", actors.MovieID);
+            ViewData["PeopleID"] = new SelectList(_context.people, "PeopleID", "Name", actors.PeopleID);
             return View(actors);
         }
 
@@ -85,8 +85,8 @@ namespace web.Controllers
             {
                 return NotFound();
             }
-            ViewData["MovieId"] = new SelectList(_context.movies, "MovieId", "MovieId", actors.MovieId);
-            ViewData["PeopleID"] = new SelectList(_context.people, "PeopleID", "PeopleID", actors.PeopleID);
+            ViewData["MovieID"] = new SelectList(_context.movies, "MovieID", "Title", actors.MovieID);
+            ViewData["PeopleID"] = new SelectList(_context.people, "PeopleID", "Name", actors.PeopleID);
             return View(actors);
         }
 
@@ -95,7 +95,7 @@ namespace web.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ActorsID,MovieId,PeopleID")] Actors actors)
+        public async Task<IActionResult> Edit(int id, [Bind("ActorsID,MovieID,PeopleID")] Actors actors)
         {
             if (id != actors.ActorsID)
             {
@@ -122,8 +122,8 @@ namespace web.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["MovieId"] = new SelectList(_context.movies, "MovieId", "MovieId", actors.MovieId);
-            ViewData["PeopleID"] = new SelectList(_context.people, "PeopleID", "PeopleID", actors.PeopleID);
+            ViewData["MovieID"] = new SelectList(_context.movies, "MovieID", "Title", actors.MovieID);
+            ViewData["PeopleID"] = new SelectList(_context.people, "PeopleID", "Name", actors.PeopleID);
             return View(actors);
         }
 

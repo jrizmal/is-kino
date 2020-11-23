@@ -13,7 +13,7 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.taken)
+                @Html.DisplayNameFor(model => model.Taken)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Seat)
@@ -28,18 +28,18 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.taken)
+                @Html.DisplayFor(modelItem => item.Taken)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Seat.SeatId)
+                @Html.DisplayFor(modelItem => item.Seat.SeatID)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Showing.ShowingId)
+                @Html.DisplayFor(modelItem => item.Showing.ShowingID)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.SeatShowingId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.SeatShowingId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.SeatShowingId">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.SeatShowingID">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.SeatShowingID">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.SeatShowingID">Delete</a>
             </td>
         </tr>
 }

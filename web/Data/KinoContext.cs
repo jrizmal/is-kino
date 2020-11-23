@@ -20,6 +20,9 @@ namespace web.Data
         public DbSet<Genre> genres { get; set; }
         public DbSet<People> people { get; set; }
 
+        public DbSet<GenreMovie> GenreMovies { get; set; }
+        public DbSet<Directors> Directors { get; set; }
+        public DbSet<Actors> Actors { get; set; }
 
         /* S tem lahko vplivaš na imena tabel */
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -31,18 +34,10 @@ namespace web.Data
             modelBuilder.Entity<Seat>().ToTable("Seat");
             modelBuilder.Entity<Showing>().ToTable("Showing");
             modelBuilder.Entity<SeatShowing>().ToTable("SeatShowing");
+            modelBuilder.Entity<GenreMovie>().ToTable("GenreMovie");
+            modelBuilder.Entity<Directors>().ToTable("Directors");
+            modelBuilder.Entity<Actors>().ToTable("Actors");
         }
 
-
-        /* S tem lahko vplivaš na imena tabel */
-        public DbSet<web.Models.GenreMovie> GenreMovie { get; set; }
-
-
-        /* S tem lahko vplivaš na imena tabel */
-        public DbSet<web.Models.Directors> Directors { get; set; }
-
-
-        /* S tem lahko vplivaš na imena tabel */
-        public DbSet<web.Models.Actors> Actors { get; set; }
     }
 }

@@ -10,7 +10,7 @@ using web.Data;
 namespace web.Migrations
 {
     [DbContext(typeof(KinoContext))]
-    [Migration("20201120004935_InitialCreate")]
+    [Migration("20201123032611_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -163,7 +163,7 @@ namespace web.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("MovieId")
+                    b.Property<int>("MovieID")
                         .HasColumnType("int");
 
                     b.Property<int>("PeopleID")
@@ -171,7 +171,7 @@ namespace web.Migrations
 
                     b.HasKey("ActorsID");
 
-                    b.HasIndex("MovieId");
+                    b.HasIndex("MovieID");
 
                     b.HasIndex("PeopleID");
 
@@ -186,6 +186,9 @@ namespace web.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
+                    b.Property<string>("City")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
@@ -196,6 +199,12 @@ namespace web.Migrations
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
@@ -230,15 +239,6 @@ namespace web.Migrations
                         .HasColumnType("nvarchar(256)")
                         .HasMaxLength(256);
 
-                    b.Property<string>("city")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("firstName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("lastName")
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
 
                     b.HasIndex("NormalizedEmail")
@@ -259,7 +259,7 @@ namespace web.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("MovieId")
+                    b.Property<int>("MovieID")
                         .HasColumnType("int");
 
                     b.Property<int>("PeopleID")
@@ -267,7 +267,7 @@ namespace web.Migrations
 
                     b.HasKey("DirectorsID");
 
-                    b.HasIndex("MovieId");
+                    b.HasIndex("MovieID");
 
                     b.HasIndex("PeopleID");
 
@@ -282,6 +282,7 @@ namespace web.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("GenreName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("GenreID");
@@ -299,21 +300,21 @@ namespace web.Migrations
                     b.Property<int>("GenreID")
                         .HasColumnType("int");
 
-                    b.Property<int>("MovieId")
+                    b.Property<int>("MovieID")
                         .HasColumnType("int");
 
                     b.HasKey("GenreMovieID");
 
                     b.HasIndex("GenreID");
 
-                    b.HasIndex("MovieId");
+                    b.HasIndex("MovieID");
 
                     b.ToTable("GenreMovie");
                 });
 
             modelBuilder.Entity("web.Models.Movie", b =>
                 {
-                    b.Property<int>("MovieId")
+                    b.Property<int>("MovieID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -322,18 +323,21 @@ namespace web.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Length")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Rating")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("MovieId");
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("MovieID");
 
                     b.ToTable("Movie");
                 });
@@ -346,6 +350,7 @@ namespace web.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("PeopleID");
@@ -384,6 +389,7 @@ namespace web.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("RoomId");
@@ -393,7 +399,7 @@ namespace web.Migrations
 
             modelBuilder.Entity("web.Models.Seat", b =>
                 {
-                    b.Property<int>("SeatId")
+                    b.Property<int>("SeatID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -401,13 +407,13 @@ namespace web.Migrations
                     b.Property<int>("Number")
                         .HasColumnType("int");
 
-                    b.Property<int?>("RoomId")
+                    b.Property<int>("RoomId")
                         .HasColumnType("int");
 
                     b.Property<int>("Row")
                         .HasColumnType("int");
 
-                    b.HasKey("SeatId");
+                    b.HasKey("SeatID");
 
                     b.HasIndex("RoomId");
 
@@ -416,7 +422,7 @@ namespace web.Migrations
 
             modelBuilder.Entity("web.Models.SeatShowing", b =>
                 {
-                    b.Property<int>("SeatShowingId")
+                    b.Property<int>("SeatShowingID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -424,13 +430,13 @@ namespace web.Migrations
                     b.Property<int>("SeatID")
                         .HasColumnType("int");
 
-                    b.Property<int>("ShowingID")
+                    b.Property<int?>("ShowingID")
                         .HasColumnType("int");
 
-                    b.Property<bool>("taken")
+                    b.Property<bool>("Taken")
                         .HasColumnType("bit");
 
-                    b.HasKey("SeatShowingId");
+                    b.HasKey("SeatShowingID");
 
                     b.HasIndex("SeatID");
 
@@ -441,7 +447,7 @@ namespace web.Migrations
 
             modelBuilder.Entity("web.Models.Showing", b =>
                 {
-                    b.Property<int>("ShowingId")
+                    b.Property<int>("ShowingID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -455,7 +461,7 @@ namespace web.Migrations
                     b.Property<DateTime>("StartTime")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("ShowingId");
+                    b.HasKey("ShowingID");
 
                     b.HasIndex("MovieID");
 
@@ -519,7 +525,7 @@ namespace web.Migrations
                 {
                     b.HasOne("web.Models.Movie", "Movie")
                         .WithMany("Actors")
-                        .HasForeignKey("MovieId")
+                        .HasForeignKey("MovieID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -534,7 +540,7 @@ namespace web.Migrations
                 {
                     b.HasOne("web.Models.Movie", "Movie")
                         .WithMany("Directors")
-                        .HasForeignKey("MovieId")
+                        .HasForeignKey("MovieID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -548,14 +554,14 @@ namespace web.Migrations
             modelBuilder.Entity("web.Models.GenreMovie", b =>
                 {
                     b.HasOne("web.Models.Genre", "Genre")
-                        .WithMany("Movies")
+                        .WithMany("GenreMovies")
                         .HasForeignKey("GenreID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("web.Models.Movie", "Movie")
-                        .WithMany("Genres")
-                        .HasForeignKey("MovieId")
+                        .WithMany("GenreMovies")
+                        .HasForeignKey("MovieID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -573,7 +579,9 @@ namespace web.Migrations
                 {
                     b.HasOne("web.Models.Room", "Room")
                         .WithMany()
-                        .HasForeignKey("RoomId");
+                        .HasForeignKey("RoomId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("web.Models.SeatShowing", b =>
@@ -586,9 +594,7 @@ namespace web.Migrations
 
                     b.HasOne("web.Models.Showing", "Showing")
                         .WithMany()
-                        .HasForeignKey("ShowingID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ShowingID");
                 });
 
             modelBuilder.Entity("web.Models.Showing", b =>

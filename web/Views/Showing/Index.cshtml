@@ -31,15 +31,15 @@
                 @Html.DisplayFor(modelItem => item.StartTime)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Movie.MovieId)
+                @Html.DisplayFor(modelItem => item.Movie.Length)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Room.RoomId)
+                @Html.DisplayFor(modelItem => item.Room.Name)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.ShowingId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ShowingId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ShowingId">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.ShowingID">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.ShowingID">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.ShowingID">Delete</a>
             </td>
         </tr>
 }

@@ -5,9 +5,9 @@ namespace web.Models
 {
     public class AppUser : IdentityUser
     {
-        public string firstName { get; set; }
-        public string lastName { get; set; }
-        public string city { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string City { get; set; }
 
     }
 }

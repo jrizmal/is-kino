@@ -48,7 +48,7 @@ namespace web.Controllers
         // GET: Reservation/Create
         public IActionResult Create()
         {
-            ViewData["ShowingID"] = new SelectList(_context.showings, "ShowingId", "ShowingId");
+            ViewData["ShowingID"] = new SelectList(_context.showings, "ShowingID", "ShowingID");
             return View();
         }
 
@@ -65,7 +65,7 @@ namespace web.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ShowingID"] = new SelectList(_context.showings, "ShowingId", "ShowingId", reservation.ShowingID);
+            ViewData["ShowingID"] = new SelectList(_context.showings, "ShowingID", "ShowingID", reservation.ShowingID);
             return View(reservation);
         }
 
@@ -82,7 +82,7 @@ namespace web.Controllers
             {
                 return NotFound();
             }
-            ViewData["ShowingID"] = new SelectList(_context.showings, "ShowingId", "ShowingId", reservation.ShowingID);
+            ViewData["ShowingID"] = new SelectList(_context.showings, "ShowingID", "ShowingID", reservation.ShowingID);
             return View(reservation);
         }
 
@@ -118,7 +118,7 @@ namespace web.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ShowingID"] = new SelectList(_context.showings, "ShowingId", "ShowingId", reservation.ShowingID);
+            ViewData["ShowingID"] = new SelectList(_context.showings, "ShowingID", "ShowingID", reservation.ShowingID);
             return View(reservation);
         }
 
