@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using web.Data;
 using web.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace web.Controllers
 {
@@ -47,6 +48,7 @@ namespace web.Controllers
         }
 
         // GET: GenreMovie/Create
+        [Authorize(Roles = "Administrator")]
         public IActionResult Create()
         {
             ViewData["GenreID"] = new SelectList(_context.genres, "GenreID", "GenreName");
@@ -59,6 +61,7 @@ namespace web.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Create([Bind("GenreMovieID,MovieID,GenreID")] GenreMovie genreMovie)
         {
             if (ModelState.IsValid)
@@ -73,6 +76,7 @@ namespace web.Controllers
         }
 
         // GET: GenreMovie/Edit/5
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -95,6 +99,7 @@ namespace web.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Edit(int id, [Bind("GenreMovieID,MovieID,GenreID")] GenreMovie genreMovie)
         {
             if (id != genreMovie.GenreMovieID)
@@ -150,6 +155,7 @@ namespace web.Controllers
         // POST: GenreMovie/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var genreMovie = await _context.GenreMovies.FindAsync(id);

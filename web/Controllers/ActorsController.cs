@@ -49,6 +49,7 @@ namespace web.Controllers
         }
 
         // GET: Actors/Create
+        [Authorize(Roles = "Administrator")]
         public IActionResult Create()
         {
             ViewData["MovieID"] = new SelectList(_context.movies, "MovieID", "Title");
