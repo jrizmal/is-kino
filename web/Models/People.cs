@@ -9,5 +9,7 @@ namespace web.Models
         public int PeopleID {get; set;}
         [Required]
         public String Name { get; set; }
+        public ICollection<Actors> Actors { get; set; }
+        public ICollection<Directors> Directors { get; set; }
     }
 }

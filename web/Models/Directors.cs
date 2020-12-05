@@ -8,7 +8,6 @@ namespace web.Models
     {
         public int DirectorsID { get; set; }
         [Required]
-        [Display(Name = "Movie")]
         public int MovieID { get; set; }
         [Required]
         public int PeopleID {get; set;}

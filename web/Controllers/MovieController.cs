@@ -21,13 +21,55 @@ namespace web.Controllers
             _context = context;
         }
 
+
         // GET: Movie
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? id, int? genreID, int? actorID, int? directorID)
         {
-            var movies = from s in _context.movies 
-                            select s;
-            movies = movies.OrderBy(m => m.Title);
-            return View(await movies.ToListAsync());
+            var viewModel = new MovieIndexGenre();
+            viewModel.Movies = await _context.movies                
+                .Include(i => i.GenreMovies)
+                    .ThenInclude(i => i.Genre)
+                .Include(i => i.Actors)
+                    .ThenInclude(i => i.People)
+                .Include(i => i.Directors)
+                    .ThenInclude(i => i.People)
+                        
+                .AsNoTracking()
+                //.OrderBy(i => i.MovieID)
+                .ToListAsync();
+
+            if (id != null)
+            {
+                ViewData["MovieID"] = id.Value;
+                Movie movie = viewModel.Movies.Where(
+                    i => i.MovieID == id.Value).Single();
+                // or GenreID?
+                viewModel.Genres = movie.GenreMovies.Select(s => s.Genre);
+                viewModel.Actors = movie.Actors.Select(s => s.People);
+            }
+
+            if (genreID != null)
+            {
+                ViewData["GenreID"] = genreID.Value;
+                viewModel.GenreMovies = viewModel.Genres.Where(
+                    x => x.GenreID == genreID).Single().GenreMovies;
+            }
+
+            if (actorID != null)
+            {
+                ViewData["ActorID"] = actorID.Value;
+                viewModel.ActorConnect = viewModel.Actors.Where(
+                    x => x.PeopleID == actorID).Single().Actors;
+            }
+
+            if (directorID != null)
+            {
+                ViewData["DirectorID"] = directorID.Value;
+                viewModel.DirectorConnect = viewModel.Directors.Where(
+                    x => x.PeopleID == directorID).Single().Directors;
+            }
+
+            return View(viewModel);
         }
 
         //GET: Movie/Details/5
