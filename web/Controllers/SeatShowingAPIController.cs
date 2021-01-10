@@ -45,7 +45,7 @@ namespace web.Controllers
         [HttpGet("showing/{id}")]
         public async Task<ActionResult<SeatShowing>> GetSeatShowingByShowing(int id)
         {
-            var seatShowing = await _context.seatShowing.Where(ss=>ss.Showing.ShowingID==id).ToListAsync();
+            var seatShowing = await _context.seatShowing.Where(ss=>ss.ShowingID==id).ToListAsync();
 
             if (seatShowing == null)
             {

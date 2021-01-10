@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 
 namespace web.Models
 {
@@ -9,8 +11,10 @@ namespace web.Models
         public int SeatShowingID { get; set; }
         [Required]
         public int SeatNumber { get; set; }
+
         [Required]
-        public Showing Showing { get; set; }
-        
+        public int ShowingID { get; set; }
+
+
     }
 }

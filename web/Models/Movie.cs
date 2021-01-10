@@ -26,5 +26,7 @@ namespace web.Models
         public ICollection<GenreMovie> GenreMovies { get; set; }
         public ICollection<Actors> Actors { get; set; }
         public ICollection<Directors> Directors { get; set; }
+
+        public string CoverImage { get; set; }
     }
 }

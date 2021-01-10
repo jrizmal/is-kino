@@ -103,7 +103,7 @@ namespace web.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Administrator")]
-        public async Task<IActionResult> Create([Bind("MovieID,Title,Rating,Length,StartDate,EndDate")] Movie movie)
+        public async Task<IActionResult> Create([Bind("MovieID,Title,Rating,Length,StartDate,EndDate,CoverImage")] Movie movie)
         {
             if (ModelState.IsValid)
             {
@@ -137,7 +137,7 @@ namespace web.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Administrator")]
-        public async Task<IActionResult> Edit(int id, [Bind("MovieID,Title,Rating,Length,StartDate,EndDate")] Movie movie)
+        public async Task<IActionResult> Edit(int id, [Bind("MovieID,Title,Rating,Length,StartDate,EndDate,CoverImage")] Movie movie)
         {
             if (id != movie.MovieID)
             {
