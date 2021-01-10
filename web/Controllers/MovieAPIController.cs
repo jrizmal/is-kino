@@ -10,7 +10,7 @@ using web.Models;
 
 namespace web.Controllers
 {
-    [Route("api/Movie")]
+    [Route("api/movie")]
     [ApiController]
     public class MovieAPIController : ControllerBase
     {

@@ -12,6 +12,8 @@ using web.Data;
 using Microsoft.EntityFrameworkCore;
 using web.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.OpenApi.Models;
+
 
 namespace web
 {
@@ -28,6 +30,11 @@ namespace web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+
+            services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
+});
 
             // kino 
             services.AddDbContext<KinoContext>(options => options.UseSqlServer(
@@ -68,6 +75,13 @@ namespace web
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
             });
+
+            app.UseSwagger();
+
+            app.UseSwaggerUI(c =>
+{
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+});
 
         }
     }

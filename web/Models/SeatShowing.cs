@@ -8,12 +8,8 @@ namespace web.Models
     {
         public int SeatShowingID { get; set; }
         [Required]
-        public int SeatID { get; set; } 
-        public int? ShowingID { get; set; }
+        public int SeatNumber { get; set; }
         [Required]
-        public bool Taken { get; set; }
-        
-        public Seat Seat {get; set;}
         public Showing Showing { get; set; }
         
     }

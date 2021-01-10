@@ -7,9 +7,11 @@ namespace web.Models
     public class Showing
     {
         public int ShowingID {get; set;}
+        
         [Required]
         [Display(Name = "Title")]
         public int MovieID { get; set; }
+
         [Required]
         [Display(Name = "Room")]
         public int RoomID { get; set; }

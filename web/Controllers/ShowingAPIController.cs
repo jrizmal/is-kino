@@ -10,7 +10,7 @@ using web.Models;
 
 namespace web.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/showing")]
     [ApiController]
     public class ShowingAPIController : ControllerBase
     {
@@ -32,14 +32,14 @@ namespace web.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Showing>> GetShowing(int id)
         {
-            var showing = await _context.showings.FindAsync(id);
+            var showing = await _context.showings.Where(sh=>sh.MovieID==id).OrderBy(sh=>sh.StartTime).ToArrayAsync();
 
             if (showing == null)
             {
                 return NotFound();
             }
 
-            return showing;
+            return Ok(showing);
         }
 
         // PUT: api/ShowingAPI/5
