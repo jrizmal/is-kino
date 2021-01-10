@@ -72,6 +72,10 @@ namespace web.Controllers
             {
                 _context.Add(showing);
                 await _context.SaveChangesAsync();
+
+                /* Dodaj še vse sedeže */
+                
+
                 return RedirectToAction(nameof(Index));
             }
             ViewData["MovieID"] = new SelectList(_context.movies, "MovieID", "Title", showing.MovieID);

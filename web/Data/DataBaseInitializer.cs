@@ -74,13 +74,16 @@ namespace web.Data
             ctx.rooms.AddRange(rooms);
             ctx.SaveChanges();
 
-            var seats = new Seat[4*12*30];
+            var seats = new Seat[4 * 12 * 30];
             int c = 0;
-                
-            for(int room = 0; room <= 3; room++){
-                for(int row = 1; row <= 12; row++){
-                    for(int number = 1; number <= 30; number++){
-                        seats[c++] = new Seat{Room=rooms[room],Row=row,Number=number};
+
+            for (int room = 0; room <= 3; room++)
+            {
+                for (int row = 1; row <= 12; row++)
+                {
+                    for (int number = 1; number <= 30; number++)
+                    {
+                        seats[c++] = new Seat { Room = rooms[room], Row = row, Number = number };
                     }
                 }
             }
@@ -98,7 +101,7 @@ namespace web.Data
             };
             ctx.movies.AddRange(movies);
             ctx.SaveChanges();
-            
+
             // added genres to movies
             var movieGenres = new GenreMovie[]
                 {
@@ -150,7 +153,7 @@ namespace web.Data
             }
             ctx.SaveChanges();
 
-             // added actors to movies
+            // added actors to movies
             var actors = new Actors[] {
                 new Actors {
                     MovieID = movies.Single(m => m.Title == "Fast and Furious: Tokyo Drift" ).MovieID,
@@ -218,7 +221,7 @@ namespace web.Data
                 ctx.Actors.Add(a);
             ctx.SaveChanges();
 
-             // added directors to movies
+            // added directors to movies
             var directors = new Directors[] {
                 new Directors {
                     MovieID = movies.Single(m => m.Title == "Fast and Furious: Tokyo Drift" ).MovieID,
@@ -254,11 +257,11 @@ namespace web.Data
                 ctx.Directors.Add(d);
             ctx.SaveChanges();
 
+            /* Admin role */
+            ctx.Roles.Add(new IdentityRole { Id = "1", Name = "Administrator" });
 
-            ctx.Roles.Add(new IdentityRole{Id="1", Name="Administrator"});
-
-            // admin account
-            var user = new AppUser
+            /* Admin user */
+            var userAdmin = new AppUser
             {
                 FirstName = "Gospod",
                 LastName = "Admin",
@@ -272,15 +275,47 @@ namespace web.Data
                 SecurityStamp = Guid.NewGuid().ToString("D")
             };
 
-            if (!ctx.Users.Any(u => u.UserName == user.UserName))
+            if (!ctx.Users.Any(u => u.UserName == userAdmin.UserName))
             {
+
                 var password = new PasswordHasher<AppUser>();
-                var hashed = password.HashPassword(user,"Geslogeslo1!");
-                user.PasswordHash = hashed;
-                ctx.Users.Add(user);
+                var hashed = password.HashPassword(userAdmin, "Geslogeslo1!");
+                userAdmin.PasswordHash = hashed;
+                ctx.Users.Add(userAdmin);
             }
 
             ctx.SaveChanges();
+
+            /* Add user role */
+            ctx.UserRoles.Add(new IdentityUserRole<string>{RoleId="1",UserId=userAdmin.Id});
+            ctx.SaveChanges();
+
+            /* Normal user */
+            var userNormal = new AppUser
+            {
+                FirstName = "Gospod",
+                LastName = "Navadnik",
+                NormalizedEmail = "JANEZ@KINO.SI",
+                Email = "janez@kino.si",
+                UserName = "janez@kino.si",
+                NormalizedUserName = "JANEZ@KINO.SI",
+                PhoneNumber = "+111111111111",
+                EmailConfirmed = true,
+                PhoneNumberConfirmed = true,
+                SecurityStamp = Guid.NewGuid().ToString("D")
+            };
+
+            if (!ctx.Users.Any(u => u.UserName == userNormal.UserName))
+            {
+
+                var password = new PasswordHasher<AppUser>();
+                var hashed = password.HashPassword(userNormal, "Geslogeslo1!");
+                userNormal.PasswordHash = hashed;
+                ctx.Users.Add(userNormal);
+            }
+
+            ctx.SaveChanges();
+
 
         }
     }
