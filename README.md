@@ -7,8 +7,8 @@ V okviru projekta bova ustvarila spletno aplikacijo, ki omogoča ogled sporeda i
 Na spletni strani lahko admin ureja in dodaja filme in predvajanja. V aplikaciji pa si lahko uporabnik rezervira sedeže.
 
 ## Naloge avtorjev
-* Domen Antlej - Zasnova podatkovne baze in vnos začetnih podatkov, izdelava spletne strani
-* Jaka Rizmal - Izdelava ogrodja projekta, izdelava API, Swagger dokumentacije in aplikacije, deploy strani in podatkovne baze na Azure
+* Domen Antlej - Zasnova podatkovne baze in vnos začetnih podatkov, razvoj spletne strani
+* Jaka Rizmal - Izdelava ogrodja projekta, izdelava API, Swagger dokumentacije in mobilne aplikacije, deploy strani in podatkovne baze na Azure
 
 ## Dostop do spletne strani
 Spletna stran in podatkovna baza sta gostovani na `Microsoft Azure`. Spletna stran je dosegljiva na spodnji povezavi.  
