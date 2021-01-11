@@ -33,3 +33,12 @@ Ob kliku na prazne sedeže se ti obarvajo.
 <br>
 <img width="300" src="https://i.ibb.co/g3fg313/138783804-320046176011997-4929465510879045417-n.jpg" alt="138783804-320046176011997-4929465510879045417-n" border="0">
 Ob kliku na gumb "rezerviraj", se izbrani sedeži zapišejo v bazo podatkov.
+
+## Diagram baze podatkov
+Poleg teh entitet so v bazi podatkov še entitete od Microsoft Identity.
+<img src="https://i.ibb.co/Nx6wFxb/baza.png" alt="baza" border="0">
+<br>
+Glavna entiteta je `Movie`, ki je preko povezovalne tabele povezan na `Genres`.  
+Na `Movie` so povezane še osebe `People` preko povezovalnih tabel. Oseba je lahko igralec ali pa režiser.  
+Aplikacija rezervira sedeže v tabeli `SeatShowing`, ki je vezana na predvajane `Showing`.
+Vsako predvajanje je vezano na dvorano `Room`, ki pa ima sedeže `Seat`.
