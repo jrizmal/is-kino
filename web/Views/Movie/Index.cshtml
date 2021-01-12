@@ -1,3 +1,58 @@
+@*
+    @foreach (var item in Model.Movies) {
+        string selectedRow = "";
+        if (item.MovieID == (int?)ViewData["MovieID"])
+        {
+            selectedRow = "success";
+        }
+        <tr class="@selectedRow">
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Rating)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Length) min
+            </td>
+                                                                display genres 
+            <td>
+                @{
+                    foreach (var genre in item.GenreMovies)
+                    {
+                        @genre.Genre.GenreName <br/>
+                    }
+                }
+            </td >
+                                                                display actors
+            <td  font-size="8px">
+                @{
+                    foreach (var actor in item.Actors)
+                    {
+                        @actor.People.Name <br/>
+                    }
+                }
+            </td>
+                                                                display directors
+            <td>
+                @{
+                    foreach (var director in item.Directors)
+                    {
+                        @director.People.Name <br/>
+                    }
+                }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EndDate)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.MovieID">Edit</a> |
+                <a asp-action="Delete" asp-route-id="@item.MovieID">Delete</a>
+            </td>
+        </tr>
+    }   
+*@
+
 @* model IEnumerable<web.Models.Movie> *@
 @model web.Models.KinoViewModels.MovieIndexGenre
 
@@ -10,78 +65,50 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>Title</th>
-            <th>Rating</th>
-            <th>Length</th>
-            <th>Genre</th>
-            <th>Actors</th>
-            <th>Directors</th>
-            @* <th>In theaters from</th> *@
-            <th>Leaving</th>
-        </tr>
-    </thead>
-    <tbody>
 
+<div class="container">
     @foreach (var item in Model.Movies) {
-        string selectedRow = "";
-        if (item.MovieID == (int?)ViewData["MovieID"])
-        {
-             selectedRow = "success";
-        }
-        <tr class="@selectedRow">
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Rating)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Length) min
-            </td>
-            @* display genres *@
-            <td>
+        <div class="moviebox">
+
+            <div class="movie-img" style="background-image: url('@item.CoverImage')"> </div>
+
+            <div class="movie-body">
+                <h5  style="font-weight: bold"> @item.Title </h5>
+                <h6 style="font-size: 14px; font-weight: bold;"> @item.Rating </h6>
+                <h6> Length: @item.Length min </h6>
+                <h6> Genre: 
                 @{
+                    int i = 0;
+                    var comma = ", ";
                     foreach (var genre in item.GenreMovies)
                     {
-                        @genre.Genre.GenreName <br/>
+                       @genre.Genre.GenreName 
+                       if(++i < item.GenreMovies.Count ) @comma
                     }
                 }
-            </td >
-            @* display actors *@
-            <td  font-size="8px">
+                </h6>
+                <h6> Directed by: 
                 @{
-                    foreach (var actor in item.Actors)
-                    {
-                        @actor.People.Name <br/>
-                    }
-                }
-            </td>
-            @* display directors *@
-            <td>
-                @{
+                    i = 0;
                     foreach (var director in item.Directors)
                     {
-                        @director.People.Name <br/>
+                       @director.People.Name
+                       if(++i < item.Directors.Count ) @comma
                     }
                 }
-            </td>
-
-            @* <td>
-                @Html.DisplayFor(modelItem => item.StartDate)
-            </td> *@
-            <td>
-                @Html.DisplayFor(modelItem => item.EndDate)
-            </td>
-            <td>
-                @* <a asp-action="Index" asp-route-id="@item.MovieID">Select</a> | *@
-                <a asp-action="Edit" asp-route-id="@item.MovieID">Edit</a> |
-                @* <a asp-action="Details" asp-route-id="@item.MovieID">Details</a> | *@
-                <a asp-action="Delete" asp-route-id="@item.MovieID">Delete</a>
-            </td>
-        </tr>
-}   
-    </tbody>
-</table>
+                </h6>
+                <h6> Cast: 
+                @{
+                    i = 0;
+                    foreach (var actor in item.Actors)
+                    {
+                       @actor.People.Name
+                       if(++i < item.Actors.Count ) @comma
+                    }
+                }
+                </h6>
+            </div>
+            
+        </div>
+    }
+</div>

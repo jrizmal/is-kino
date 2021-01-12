@@ -13,10 +13,13 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.StartTime)
+                Ayylmao
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Movie)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StartTime)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Room)
@@ -28,10 +31,13 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.StartTime)
+            <img src="@item.Movie.CoverImage" style="height: 100px; background-align:top"> </img>
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Movie.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StartTime)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Room.Name)
